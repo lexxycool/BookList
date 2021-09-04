@@ -29,7 +29,7 @@ class UI {
             UI.addBookToList(book);
         })
     }
-
+    //function to add book
      static addBookToList(book) {
         const list = document.getElementById('book-list');
         const row = document.createElement('tr');
@@ -43,12 +43,61 @@ class UI {
 
     }
 
+    //function to clear the form fields
+    static clearFields() {
+    document.getElementById('title').value = '';
+    document.getElementById('author').value = '';
+    document.getElementById('isbn').value = '';
+ 
+   }
+
+   //function to delete book
+   static deleteBook(event) {
+        if(event.classList.contains('delete')) {
+            event.parentElement.parentElement.remove();
+        }
+   }
+
+
+
 }
 
 //Store Class
 
 //Event to Display Books
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
+
 //Event to Add a Book
 
+//get submit element
+const submit = document.querySelector('.btn-block');
+
+//add book
+submit.addEventListener('click', addBook);
+
+//function to add book
+function addBook() {
+    //get the values of each field
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const isbn = document.getElementById('isbn').value;
+    
+    //create a new book object
+    const    book = new Book(title, author, isbn);
+
+    //call the method to add the book
+    UI.addBookToList(book);
+
+    //clear the form fields
+    UI.clearFields();
+
+  
+}
+
+
+
 //Event to remove a Book
+const bookList = document.getElementById("book-list");
+bookList.addEventListener('click', event => {
+    UI.deleteBook(event.target);
+})
